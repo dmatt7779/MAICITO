@@ -10,8 +10,8 @@ from langchain.chains import RetrievalQA
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.document_loaders import DirectoryLoader
 from langchain_openai import OpenAI
-from semantic import get_chunks_from_pdf
-from semantic import Document
+from old_code.semantic import get_chunks_from_pdf
+from old_code.semantic import Document
 from langchain_openai import ChatOpenAI
 
 chunks = get_chunks_from_pdf('/Users/luciacastanomarin/Documents/AI_chatbotPDF/chatbotAI/Material_AVA_Prospectiva_2.pdf')

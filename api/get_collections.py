@@ -1,9 +1,10 @@
-from fastapi import Depends
-from services.vector_store import VectorStore
+from services.chromadb_manager import ChromaDBManager
 
-async def get_collections(vector_store: VectorStore = Depends()):
+chroma_db_manager = ChromaDBManager()
+
+async def get_collections():
     try:
-        collections = vector_store.client.list_collections()
-        return {"collections": collections}
+        client = chroma_db_manager.get_client()
+        return {"collections": client.list_collections()}
     except Exception as e:
-        return {"error": str(e)} 
+        return {"error": str(e)}

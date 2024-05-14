@@ -5,7 +5,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-os.environ["OPENAI_API_KEY"] = ""
+os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 class QuestionAnswering:
     def __init__(self):
@@ -19,5 +19,5 @@ class QuestionAnswering:
         documents = [Document(page_content=chunk['text'], metadata=chunk['metadata']) for chunk in retrieved_chunks]
 
         # Use the chain to generate the answer
-        answer = self.chain.invoke({"question": question, "documents": retrieved_chunks})
+        answer = self.chain.invoke({"question": question, "documents": documents})
         return answer

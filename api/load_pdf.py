@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import HTTPException, Depends
+from fastapi import HTTPException
 
 # Replace with your chosen PDF processing and vector store libraries
 from services.vector_store import VectorStore
@@ -8,7 +8,7 @@ from services.pdf_processor import PDFProcessor
 pdf_processor = PDFProcessor()
 vector_store = VectorStore()
 
-async def load_pdf(pdf_paths: List[str], course_name: str, vector_store: VectorStore = Depends()):
+async def load_pdf(pdf_paths: List[str], course_name: str, collection_name: str):
     for pdf_path in pdf_paths:
         try:
             # Process PDF and extract text
@@ -17,7 +17,7 @@ async def load_pdf(pdf_paths: List[str], course_name: str, vector_store: VectorS
               text_chunks_with_metadata = pdf_processor.process(f, document_name, course_name)
 
             # Embed and store chunks in Chroma
-            vector_store.add_documents(text_chunks_with_metadata)
+            vector_store.add_documents(text_chunks_with_metadata, collection_name)
         except FileNotFoundError:
             raise HTTPException(status_code=400, detail=f"PDF not found at path: {pdf_path}")
         except Exception as e:

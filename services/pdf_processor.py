@@ -1,11 +1,11 @@
 import re
 import os
-from typing import List, Callable, Dict
+from typing import List, Dict
 from PyPDF2 import PdfReader
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from langchain_openai import OpenAIEmbeddings
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 class PDFProcessor:
     def __init__(self, chunking_strategy: str = "word_count", chunk_size: int = 800):
@@ -30,6 +30,7 @@ class PDFProcessor:
         text = ""
         for page in pdf_reader.pages:
             text += page.extract_text()
+            break
         return text
 
     def _clean_text(self, text: str) -> str:
@@ -58,9 +59,6 @@ class PDFProcessor:
                 },
                 "id": f"id{i//self.chunk_size}"
             })
-            # break in the 10 iteration:
-            if i//self.chunk_size == 10:
-                break
         
         return chunks
 

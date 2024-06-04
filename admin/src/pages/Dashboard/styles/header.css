@@ -1,0 +1,59 @@
+.ds-header{
+    display: grid;
+    padding: 0 .5rem;
+    align-items: center;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    box-shadow: 0 0 .625rem var(--bg-Manatee);
+    background-color: var(--bg-MaastrichtBlue);
+}
+
+.ds-hd-new{
+    gap: .625rem;
+    display: grid;
+    width: 2.75rem;
+    overflow: hidden;
+    align-items: center;
+    padding: .25rem .5rem;    
+    border-radius: .25rem;
+    grid-auto-flow: column;
+    color: var(--bg-white);
+    letter-spacing: .07rem;
+    background: transparent;
+    transition: all .3s ease-in-out;
+    border: .125rem solid var(--bg-white);
+}
+
+.ds-hd-icon{
+    font-size: 1.5rem;
+}
+
+.ds-hd-text{
+    font-weight: 500;
+    font-size: .813rem;
+    white-space: nowrap;
+}
+
+.ds-hd-new:hover{
+    width: 9.5rem;
+    background: var(--bg-White\20);
+    box-shadow: 0 0 .313rem var(--bg-white);
+    text-shadow: 0 0 .313rem var(--bg-white);
+}
+
+.ds-hd-user{
+    gap: .05rem;
+    display: grid;
+    place-items: center;
+    color: var(--bg-white);
+    background: transparent;
+    transition: all .3s ease-in-out;
+}
+
+.ds-hd-user:hover{
+    text-shadow: 0 0 .313rem var(--bg-white); 
+}
+
+.ds-hd-out-icon{
+    font-size: 1.5rem;
+}

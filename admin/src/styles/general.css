@@ -1,0 +1,68 @@
+:root{
+    --bg-AzureishWhite: #E2EBF0;
+    --bg-ColumbiaBlue: #CFD9DF;
+    --bg-ColumbiaBlue\90: #CFD9DFE6;
+    --bg-AzureishWhite\50: #E2EBF080;
+    --bg-White\55: #FFFFFF8C;
+    --bg-White\20: #FFFFFF33;
+    --bg-cadetBlue: #4EA29F;
+    --bg-moonstoneBlue: #179D99;
+    --bg-Manatee: #9D9EA3;
+    --bg-MaastrichtBlue: #122338;
+    --bg-RichBlack: #011626;
+    --bg-white: #FFFFFF;
+    --bg-Cultured: #F4F6F6;
+    --bg-backdrop: #00000080;
+    --bg-red: #FF0000;
+    --bg-Not-Trained: #FD2C38;
+    --bg-Not-Trained-Complement: #B0020C;
+    --bg-trained: #13AA52;
+    --bg-trained-complement: #00662B;
+    --bg-training: #E47600;
+    --bg-training-complement: #F7BD02 ;
+    --bg-silver-foil: #B0B1B1
+}
+
+@font-face {
+    font-family: Assistant;
+    src: url(../fonts/Assistant-VariableFont_wght.ttf);
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    border: none;
+    font-family: Assistant;
+}
+
+html, body, #root{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+span{
+    pointer-events: none;
+}
+
+input:focus, textarea:focus{
+    font-weight: bold;
+}
+
+@media (width >= 850px) {
+    .lg-form{
+        width: 25rem;
+    }
+
+    .ds-dl-b-main{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ds-upload{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

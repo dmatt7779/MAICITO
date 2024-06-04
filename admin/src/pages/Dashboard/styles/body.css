@@ -1,0 +1,9 @@
+.ds-body{
+    gap: 1rem;
+    display: grid;
+    padding: .5rem;
+    overflow-y: auto;
+    grid-auto-flow: dense;
+    grid-auto-rows: 10rem;
+    grid-template-columns: repeat(auto-fill, minmax(21.875rem, 1fr));
+}

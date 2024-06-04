@@ -1,0 +1,100 @@
+.ds-dialog::backdrop{
+    background: var(--bg-backdrop);
+}
+
+.ds-dialog{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 90%;
+    z-index: 50;
+    height: 90%;    
+    margin: auto;
+    overflow: hidden;
+    user-select: none;
+    position: absolute;
+    border-radius: .625rem;
+}
+.ds-dl{
+    width: 100%;
+    height: 100%;
+    display: grid; 
+    grid-template-rows: auto 1fr;
+}
+
+.ds-dl-header{
+    gap: .5rem;
+    display: grid;
+    padding: .625rem;
+    align-items: center;
+    grid-template-columns: auto 1fr auto;
+    background-color: var(--bg-moonstoneBlue);
+}
+
+.ds-dl-h-icon{
+    font-size: 1.375rem;
+    color: var(--bg-MaastrichtBlue);
+}
+
+.ds-dl-h-text{
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: .07rem;
+    color: var(--bg-MaastrichtBlue);
+}
+
+.ds-dl-h-button{
+    opacity: .5;
+    font-size: 1.25rem;
+    background: transparent;
+    color: var(--bg-MaastrichtBlue);
+    transition: all .5s ease-in-out;
+}
+
+.ds-dl-h-button:hover{
+    opacity: 1;
+    text-shadow: 0 0 .2rem var(--bg-MaastrichtBlue);
+}
+
+.ds-dl-body{
+    display: grid;
+    overflow-y: auto;
+    grid-template-rows: 1fr auto;
+}
+
+.ds-dl-b-main{
+    display: grid;
+    overflow-y: auto;
+}
+
+.ds-dl-footer{
+    display: grid;
+    place-content: center;
+}
+
+.ds-dl-f-button{
+    gap: .25rem;
+    display: grid;
+    font-weight: 400;
+    font-size: .875rem;
+    padding: .5rem 1rem;
+    align-items: center;
+    border-radius: .5rem;
+    margin-bottom: .5rem;
+    place-content: center;
+    grid-auto-flow: column;
+    color: var(--bg-white);
+    letter-spacing: .07rem;
+    background: linear-gradient(to left, var(--bg-RichBlack) 0%, var(--bg-MaastrichtBlue) 100%);
+    transition: all .3s ease-in-out;
+}
+
+.ds-dl-f-button:hover{
+    box-shadow: 0 0 .625rem var(--bg-MaastrichtBlue);
+    text-shadow: 0 0 .625rem var(--bg-white);
+}
+
+.ds-dl-f-b-icon{
+    font-size: 1.25rem
+}

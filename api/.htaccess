@@ -1,0 +1,30 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+#Set Headers.
+Header always set Access-Control-Allow-Origin "http://localhost:5173"
+Header always set Access-Control-Allow-Methods "GET, POST"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+Header always set Access-Control-Allow-Credentials "true"
+
+#Verify That The Authorization Header Is Enabled And Is Not Empty.
+RewriteCond %{HTTP:Authorization} .+
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+#Hide Extensions.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+#Pass Get Parameters GET.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^/]+)/?$ $1.php [QSA,NC,L]
+
+#Allow OPTIONS requests and respond with 200 OK.
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=200,L]
+
+#Disabled Directory Browsing.
+    Options All -Indexes
+

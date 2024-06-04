@@ -1,0 +1,50 @@
+.ds-item{
+    gap: .25rem;
+    display: grid;
+    align-items: center;
+    border-radius: .25rem;
+    padding: .125rem .25rem;
+    grid-template-columns: auto 1fr auto;
+    transition: background-image .7s ease-in-out;
+}
+
+.ds-item:hover{
+    background-image: linear-gradient(to right, var(--bg-AzureishWhite) 0%, transparent 100%);
+}
+
+.ds-i-checkbox{
+    margin: 0;
+    width: 1rem;
+    height: 1rem;
+    display: grid;
+    appearance: none;
+    border-radius: .25rem;
+    place-content: center;
+    border: .1rem solid var(--bg-MaastrichtBlue);
+    transition: background .2s ease-in-out;
+}
+
+.ds-i-checkbox::before{
+    content: '';
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: transform .2s ease-in-out;
+    background-color: var(--bg-white);
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.ds-i-checkbox:checked{
+    background-color: var(--bg-MaastrichtBlue);
+}
+
+.ds-i-checkbox:checked::before{
+    transform: scale(1);
+}
+
+.ds-i-title{
+    font-weight: 500;
+    font-size: .813rem;
+    letter-spacing: .05rem;
+}

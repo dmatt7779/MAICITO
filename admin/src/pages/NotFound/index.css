@@ -1,0 +1,29 @@
+.nf-content{
+  height: 100%;
+  display: grid;
+  text-align: center;
+  place-content: center;
+}
+
+
+
+/*
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr; /* Una columna por defecto 
+  grid-template-rows: repeat(4, auto); /* Cuatro filas de altura automática 
+  gap: 10px; /* Espacio entre los elementos 
+}
+
+.full-height {
+  grid-row: span 4; /* Ocupar todas las filas 
+  background-color: lightblue; /* Color de fondo para diferenciarlo 
+}
+
+/* Media query para pantallas de tamaño pequeño 
+@media (min-width: 600px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas cuando la pantalla es lo suficientemente grande 
+  }
+}
+*/

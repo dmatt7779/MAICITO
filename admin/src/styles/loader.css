@@ -1,0 +1,64 @@
+.dld-dialog::backdrop{
+    background: var(--bg-White\55);
+}
+.dld-dialog{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;   
+    width: 100%;    
+    z-index: 60;
+    margin: auto;
+    height: 100%; 
+    overflow: hidden;
+    user-select: none;
+    position: absolute;
+    background-color: transparent;
+}
+.dld-content{
+    width: 100%;    
+    height: 100%;    
+    display: grid;
+    place-content: center;
+    gap: 1rem;
+}
+.dld-animate{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dld-a-gif{
+    width: 5rem;
+    display: grid;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: .25rem solid transparent;
+    animation: l15 1s infinite linear;
+    border-right-color: var(--bg-cadetBlue);
+}
+.dld-a-gif::before,
+.dld-a-gif::after {    
+    content: '';
+    grid-area: 1/1;
+    margin: .125rem;
+    border: inherit;
+    border-radius: 50%;
+    animation: l15 2s infinite;
+    border-right-color: var(--bg-MaastrichtBlue);
+}
+.dld-a-gif::after {
+    margin: .5rem;
+    animation-duration: 3s;
+    border-right-color: var(--bg-Manatee);
+}
+@keyframes l15{ 
+    100%{
+        transform: rotate(1turn)
+    }
+}
+.dld-text{
+    font-weight: bold;
+    font-size: .85rem;
+    letter-spacing: .15rem;
+    color: var(--bg-MaastrichtBlue);
+}

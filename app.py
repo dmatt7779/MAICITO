@@ -1,11 +1,11 @@
 import argparse
 from fastapi import FastAPI
 
-from api.load_pdf import load_pdf
-from api.ask_question import ask_question
-from api.create_collection import create_collection
-from api.get_collections import get_collections
-from api.delete_collection import delete_collection
+from api_chat.load_pdf import load_pdf
+from api_chat.ask_question import ask_question
+from api_chat.create_collection import create_collection
+from api_chat.get_collections import get_collections
+from api_chat.delete_collection import delete_collection
 
 from services.chromadb_manager import ChromaDBManager
 

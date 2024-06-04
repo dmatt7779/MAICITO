@@ -1,7 +1,9 @@
 import os
+from dotenv import load_dotenv
 import subprocess
 import chromadb
 
+load_dotenv()
 
 class ChromaDBManager:
 

@@ -1,0 +1,89 @@
+html, body, #root{
+    background-image: url('/images/background.jpg');
+}
+
+.lg-logo{
+    width: 18rem;
+    height: 18rem;
+}
+
+.lg-container{
+    gap: .5rem;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    place-content: center;
+}
+
+.lg-form{
+    gap: .625rem;
+    display: grid;
+    padding: .625rem;
+    border-radius: .938rem;
+    background-color: var(--bg-White\55);
+    box-shadow: 0 0 .625rem var(--bg-Manatee);
+}
+
+.lg-form-group{
+    gap: .313rem;
+    display: grid;
+    position: relative;
+}
+
+.lg-form-label{
+    font-weight: 600;
+    font-size: .813rem;
+    letter-spacing: .12rem;
+    color: var(--bg-MaastrichtBlue);
+}
+
+.lg-form-group-input{
+    display: grid;
+    padding: 0 .5rem;
+    align-items: center;
+    border-radius: .5rem;
+    background: var(--bg-white);
+    grid-template-columns: auto 1fr auto; 
+}
+
+.lg-form-input{
+    height: 2.5rem;
+    font-weight: 400;
+    padding: 0 .5rem;
+    font-size: .875rem;
+    letter-spacing: .12rem;
+    background: transparent;
+}
+
+.lg-icon{
+    font-size: 1.5rem;
+    color: var(--bg-MaastrichtBlue);
+}
+
+.lg-form-button{
+    display: grid;
+    place-content: center;
+    background: transparent;
+}
+
+.lg-submit{
+    display: grid;
+    gap: .625rem;
+    padding: .5rem;
+    font-weight: 600;
+    font-size: .875rem;
+    align-items: center;
+    border-radius: .5rem;
+    place-content: center;
+    grid-auto-flow: column;
+    letter-spacing: .12rem;
+    color: var(--bg-MaastrichtBlue);
+    transition: all .4s ease-in-out;
+    background-image: linear-gradient(to left, var(--bg-cadetBlue) 0%, var(--bg-moonstoneBlue) 100%);
+}
+
+.lg-submit:hover{
+    box-shadow: 0 0 .5rem var(--bg-cadetBlue);
+    text-shadow: 0 0 .5rem var(--bg-MaastrichtBlue);
+}

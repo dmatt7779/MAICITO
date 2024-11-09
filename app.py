@@ -43,8 +43,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='ChromaDB API with FastAPI')
     parser.add_argument('-uh', '--uvicorn-host', type=str, default='0.0.0.0', help='Host for the Uvicorn server')
     parser.add_argument('-up', '--uvicorn-port', type=int, default=8001, help='Port for the Uvicorn server')
+    parser.add_argument('-wk', '--workers', type=int, default=16, help='Number or available threads')
     args = parser.parse_args()
 
     # Start the FastAPI application
     import uvicorn
-    uvicorn.run(app, host=args.uvicorn_host, port=args.uvicorn_port, ssl=ssl_context, log_level="debug")
+    # uvicorn.run(app, host=args.uvicorn_host, port=args.uvicorn_port, ssl=ssl_context, log_level="debug")
+    uvicorn.run(app, host=args.uvicorn_host, port=args.uvicorn_port, ssl=ssl_context, log_level="debug", workers=args.workers)

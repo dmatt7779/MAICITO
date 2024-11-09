@@ -1,4 +1,4 @@
-import json
+
 import re
 from markdown import markdown
 from bs4 import BeautifulSoup
@@ -6,31 +6,39 @@ from fastapi import Body
 from fastapi import HTTPException
 from services.question_answering import QuestionAnswering
 from services.vector_store import VectorStore
+import datetime
 
 question_answering = QuestionAnswering()
 vector_store = VectorStore()
 
-# question: str, collection_name: str
-async def ask_question(data: str = Body(...)):
+def process_question_worker(data: str):
+    inicio = datetime.datetime.now()
+    print(f"Worker iniciado: {inicio.isoformat()}")
+
     try:
         params_splitted = data.split('|')
-
         collection_name = params_splitted[0]
         question = params_splitted[1]
 
-        # Retrieve relevant chunks
         retrieved_chunks = vector_store.get_relevant_documents(question, collection_name)
+        answer = question_answering.generate_answer(question, retrieved_chunks)
+        html_answer = formatting_response_to_html(answer)
+
+        fin = datetime.datetime.now()
+        print(f"Worker finalizado: {fin.isoformat()}")
+
+        return {"answer": html_answer}
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error Retrieving Relevant Documents: {e}")
+        return {"error": str(e)}
     
-    try:
-        # Generate answer using LLM
-        answer = question_answering.generate_answer(question, retrieved_chunks)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error Generating Answer: {e}")
-    # print(answer)
-    return {"answer": formatting_response_to_html(answer)}
+async def ask_question(data: str = Body(...)):  # Removed multiprocessing here
+    response =  process_question_worker(data) # Direct call to worker function
+
+    if "error" in response:
+        raise HTTPException(status_code=500, detail=response["error"])
+
+    return response
 
 def formatting_response_to_html(jsonResponse: str):
     answer = jsonResponse
@@ -59,9 +67,6 @@ def formatting_response_to_html(jsonResponse: str):
             ol.append(li)
             item.replace_with('')
         soup.append(ol)
-    
-    # print(soup)
-    
     return str(soup)
 
 def format_latex(formula):

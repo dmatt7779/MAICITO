@@ -1,4 +1,4 @@
-fastapi
+fastapi==0.111.0
 uvicorn
 chromadb
 PyPDF2
@@ -7,3 +7,5 @@ langchain-openai
 openai
 sentence-transformers
 pytest
+ssl
+redis

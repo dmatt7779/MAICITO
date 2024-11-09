@@ -1,3 +1,4 @@
+from fastapi import Body
 from typing import List
 from fastapi import HTTPException
 
@@ -8,7 +9,15 @@ from services.pdf_processor import PDFProcessor
 pdf_processor = PDFProcessor()
 vector_store = VectorStore()
 
-async def load_pdf(pdf_paths: List[str], course_name: str, collection_name: str):
+# pdf_paths: str, course_name: str, collection_name: str
+async def load_pdf(data: str = Body(...)):
+    print(data)
+    params_splitted = data.split('|')
+
+    course_name = params_splitted[0]
+    collection_name = params_splitted[0]
+    pdf_paths = params_splitted[1].split(",")
+
     for pdf_path in pdf_paths:
         try:
             # Process PDF and extract text

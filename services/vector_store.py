@@ -34,6 +34,7 @@ class VectorStore:
     def get_relevant_documents(self, query: str, collection_name: str, top_k: int = 3) -> List[Dict[str, str]]:
         self.client = chroma_db_manager.get_client()
         collection = self.client.get_collection(name=collection_name)
+        print(collection)
         results = collection.query(
             query_texts=[query], n_results=top_k
         )

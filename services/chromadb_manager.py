@@ -8,8 +8,8 @@ load_dotenv()
 class ChromaDBManager:
 
   def __init__(self):
-    self.chroma_host = os.environ["CHROMA_HOST"]
-    self.chroma_port = int(os.environ["CHROMA_PORT"])
+    self.chroma_host = os.environ.get("CHROMA_HOST")
+    self.chroma_port = int(os.environ.get("CHROMA_PORT"))
 
   def is_chromadb_running(self):
     command = ["docker", "ps", "-f", "ancestor=chromadb/chroma", "--format", "{{.Status}}"]

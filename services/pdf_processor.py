@@ -30,7 +30,7 @@ class PDFProcessor:
         text = ""
         for page in pdf_reader.pages:
             text += page.extract_text()
-            break
+            # break
         return text
 
     def _clean_text(self, text: str) -> str:
@@ -100,5 +100,8 @@ class PDFProcessor:
             start_idx = breakpoint + 1
         if start_idx < len(sentences):
             chunks.append({"text": " ".join([s["sentence"] for s in sentences[start_idx:]])})
-
+        # file_path = './my_file.txt'
+        # with open(file_path, 'w') as file:
+        #     file.write(f'{chunk_size}\n')
+        print(chunk_size)
         return chunks

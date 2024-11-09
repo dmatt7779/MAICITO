@@ -9,7 +9,7 @@ os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 class QuestionAnswering:
     def __init__(self):
-        self.llm = ChatOpenAI(model_name="gpt-3.5-turbo")
+        self.llm = ChatOpenAI(model_name="gpt-4o-mini")
         self.prompt = ChatPromptTemplate.from_template("Responde la pregunta: {question}, basado en los documentos: {documents}")
         self.output_parser = StrOutputParser()
         self.chain = self.prompt | self.llm | self.output_parser

@@ -1,4 +1,5 @@
 
+import asyncio
 import re
 from markdown import markdown
 from bs4 import BeautifulSoup
@@ -7,9 +8,13 @@ from fastapi import HTTPException
 from services.question_answering import QuestionAnswering
 from services.vector_store import VectorStore
 import datetime
+import concurrent.futures
 
 question_answering = QuestionAnswering()
 vector_store = VectorStore()
+question_answering = QuestionAnswering()
+vector_store = VectorStore()
+MAX_THREADS = 4  # Adjust as needed
 
 def process_question_worker(data: str):
     inicio = datetime.datetime.now()
@@ -32,12 +37,13 @@ def process_question_worker(data: str):
     except Exception as e:
         return {"error": str(e)}
     
-async def ask_question(data: str = Body(...)):  # Removed multiprocessing here
-    response =  process_question_worker(data) # Direct call to worker function
-
+async def ask_question(data: str = Body(...)):
+    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+        response = await asyncio.to_thread(process_question_worker, data)
+    # response =  process_question_worker(data) # Direct call to worker function
     if "error" in response:
         raise HTTPException(status_code=500, detail=response["error"])
-
+    
     return response
 
 def formatting_response_to_html(jsonResponse: str):

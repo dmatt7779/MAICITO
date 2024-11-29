@@ -1,8 +1,13 @@
-export const URL = "http://localhost/Ceipa/roomIA/api/v1/";
-export const SUCCESS = "Success";
-export const INFO = "Information";
-export const WARNING = "Warning";
+export const URL = "/api/v1/";
+export const URL_CHROMA = "/macito/";
+export const URL_PUBLIC_FILES = "C:/xampp/htdocs/api/public/files/";
+export const URL_PUBLIC_IMAGE = "/api/public/images/";
+export const SUCCESS = "success";
+export const INFO = "information";
+export const WARNING = "warning";
 export const GET = "GET";
+export const POST = "POST";
+export const DELETE = "DELETE";
 export const URI_ROOMS = "room.php";
 export const INITIAL_CONTEXT_ROOM = {
   id: "",
@@ -13,3 +18,5 @@ export const INITIAL_CONTEXT_ROOM = {
   files: [],
   image: "",
 };
+export const ACTIVE = "ACTIVO";
+export const INACTIVE = "INACTIVO";

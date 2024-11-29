@@ -1,5 +1,6 @@
 import { ChangeEvent, LegacyRef, ReactNode } from "react";
 import { RoomProps } from "../types";
+import { TypeOptions } from "react-toastify";
 
 export interface ProtectedRoutes {
   children?: ReactNode;
@@ -26,8 +27,16 @@ export interface StatementProps {
   toggleLoader?: Function;
 }
 
+export interface StatementChromaProps {
+  uri: string;
+  method: string;
+  param?: FormData | string;
+  oParam?: Object | string;
+  toggleLoader?: Function;
+}
+
 export interface ToastProps {
-  type: string;
+  type: TypeOptions;
   message: string;
 }
 
@@ -65,6 +74,9 @@ export interface ServiceRoomsProps {
   filesUpdate?: string[] | null;
   path?: string | null;
   id?: string | null;
+  oldTitle?: string | null;
+  toggleDialog?: Function;
+  toggleRefresh?: Function;
 }
 
 export interface CardRoomsProps {
@@ -73,8 +85,11 @@ export interface CardRoomsProps {
   words: string;
   files: string | number;
   created: string;
+  state: string;
+  image: string;
   toggleDialog: Function;
   toggleLoader: Function;
+  refresh?: Function;
 }
 
 export interface DialogProps extends RoomProps {
@@ -83,6 +98,9 @@ export interface DialogProps extends RoomProps {
   toggleDialog?: Function;
   toggleLoader?: Function;
   updateData?: (newData: Partial<RoomProps>) => void;
+  isRefresh?: boolean,
+  toggleRefresh?: Function,
+  nameTitle?: string
 }
 
 export interface ConfirmAlertProps {
@@ -90,4 +108,14 @@ export interface ConfirmAlertProps {
   message: string;
   onConfirm: () => void;
   onCancel: () => void;
+}
+
+export interface RecoverProps{
+  toggleLoader: Function;
+  newpassword?: HTMLInputElement | null;
+  valueNewPassword?: string;
+  confirmpassword?: HTMLInputElement | null;
+  valueConfirmpassword?: string;
+  navigate?: Function;
+  reset: Function;
 }

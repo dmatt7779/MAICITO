@@ -1,7 +1,8 @@
-import ProtectedRoute from "../components/ProtectedRoute";
+import {ProtectedRoute, ProtectedRecover} from "../components/ProtectedRoute";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
+import Recover from "../pages/Recover";
 import "../styles/general.css";
 import "../styles/icons.css";
 
@@ -21,6 +22,14 @@ const routes = [
   {
     path: "/*",
     element: <NotFound />,
+  },
+  {
+    path: "/recover",
+    element: (
+      <ProtectedRecover>
+        <Recover/>
+      </ProtectedRecover>
+    ),
   },
 ];
 

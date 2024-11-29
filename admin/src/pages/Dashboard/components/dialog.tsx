@@ -12,6 +12,7 @@ const Dialog = () => {
     visibleDialog,
     toggleDialog,
     toggleLoader,
+    toggleRefresh,
     id,
     title,
     introduction,
@@ -35,10 +36,12 @@ const Dialog = () => {
 
   const resetForm = () => {
     refForm.current?.reset();
+    if (refWords.current) refWords.current.value = "0";
     setListFiles([]);
     setImageUrl(null);
     setFilesUpdate([]);
     updateData!(INITIAL_CONTEXT_ROOM);
+    toggleRefresh!();
   };
 
   useEffect(() => {
@@ -76,24 +79,50 @@ const Dialog = () => {
     };
   }, []);
 
-  const handleRooms = (event: FormEvent<HTMLFormElement>) => {
+  const handleRooms = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const update = id?.trim() !== "" ? true : false;
 
-    Services.rooms({
-      toggleLoader: toggleLoader!,
-      inputTitle: refTitle.current,
-      inputIntroduction: refIntroduction.current,
-      inputWords: refWords.current,
-      inputImage: refImage.current,
-      files: listFiles,
-      resetForm,
-      update: update,
-      filesUpdate: filesUpdate,
-      path: path,
-      id: id,
-    });
+    if (update) {
+      const confirmed = window.confirm(
+        "¿Modificaste un asistente, estas seguro de aplicar los cambios?"
+      );
+
+      if (confirmed) {        
+        await Services.rooms({
+          toggleLoader: toggleLoader!,
+          inputTitle: refTitle.current,
+          inputIntroduction: refIntroduction.current,
+          inputWords: refWords.current,
+          inputImage: refImage.current,
+          files: listFiles,
+          resetForm,
+          update: update,
+          filesUpdate: filesUpdate,
+          path: path,
+          id: id,
+          oldTitle: title,
+          toggleDialog,
+          toggleRefresh
+        });        
+      }
+    } else {
+      await Services.rooms({
+        toggleLoader: toggleLoader!,
+        inputTitle: refTitle.current,
+        inputIntroduction: refIntroduction.current,
+        inputWords: refWords.current,
+        inputImage: refImage.current,
+        files: listFiles,
+        resetForm,
+        update: update,
+        filesUpdate: filesUpdate,
+        path: path,
+        id: id,
+        toggleDialog: toggleDialog!
+      });
+    }
   };
 
   return (

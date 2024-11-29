@@ -2,12 +2,12 @@ html, body, #root{
     background-image: url('/images/background.jpg');
 }
 
-.lg-logo{
+.rc-logo{
     width: 18rem;
     height: 18rem;
 }
 
-.lg-container{
+.rc-container{
     gap: .5rem;
     width: 100%;
     height: 100%;
@@ -16,7 +16,8 @@ html, body, #root{
     place-content: center;
 }
 
-.lg-form{
+.rc-form{
+    width: 25rem;
     gap: .625rem;
     display: grid;
     padding: .625rem;
@@ -25,20 +26,20 @@ html, body, #root{
     box-shadow: 0 0 .625rem var(--bg-Manatee);
 }
 
-.lg-form-group{
+.rc-form-group{
     gap: .313rem;
     display: grid;
     position: relative;
 }
 
-.lg-form-label{
+.rc-form-label{
     font-weight: 600;
     font-size: .813rem;
     letter-spacing: .12rem;
     color: var(--bg-MaastrichtBlue);
 }
 
-.lg-form-group-input{
+.rc-form-group-input{
     display: grid;
     padding: 0 .5rem;
     align-items: center;
@@ -47,7 +48,7 @@ html, body, #root{
     grid-template-columns: auto 1fr auto; 
 }
 
-.lg-form-input{
+.rc-form-input{
     height: 2.5rem;
     font-weight: 400;
     padding: 0 .5rem;
@@ -56,18 +57,18 @@ html, body, #root{
     background: transparent;
 }
 
-.lg-icon{
+.rc-icon{
     font-size: 1.5rem;
     color: var(--bg-MaastrichtBlue);
 }
 
-.lg-form-button{
+.rc-form-button{
     display: grid;
     place-content: center;
     background: transparent;
 }
 
-.lg-submit{
+.rc-submit{
     display: grid;
     gap: .625rem;
     padding: .5rem;
@@ -83,18 +84,17 @@ html, body, #root{
     background-image: linear-gradient(to left, var(--bg-cadetBlue) 0%, var(--bg-moonstoneBlue) 100%);
 }
 
-.lg-submit:hover{
+.rc-submit:hover{
     box-shadow: 0 0 .5rem var(--bg-cadetBlue);
     text-shadow: 0 0 .5rem var(--bg-MaastrichtBlue);
 }
 
-.lg-recovery{
+.rc-recovery{
     font-size: .9rem;
     letter-spacing: .05rem;
     text-align: right;
-    cursor: pointer;
 }
 
-.lg-recovery:hover{
+.rc-recovery:hover{
     font-weight: 500;
 }

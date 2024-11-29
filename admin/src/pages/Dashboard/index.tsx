@@ -13,6 +13,7 @@ export const useRooms = () => useContext(roomsContext);
 const Dashboard = () => {
   const [visibleDialog, setVisibleDialog] = useState<boolean>(false);
   const [visibleLoader, setVisibleLoader] = useState<boolean>(false);
+  const [isRefresh, setIsRefresh] = useState<boolean>(false);
   const [contextData, setContextData] =
     useState<RoomProps>(INITIAL_CONTEXT_ROOM);
 
@@ -20,13 +21,17 @@ const Dashboard = () => {
     setContextData((prevData) => ({ ...prevData, ...newData }));
   };
 
+  const handleRefresh = () => setIsRefresh(!isRefresh)
+
   const Param = {
     visibleDialog: visibleDialog,
     toggleDialog: () => setVisibleDialog(!visibleDialog),
     visibleLoader: visibleLoader,
     toggleLoader: setVisibleLoader,
+    isRefresh,
+    toggleRefresh: handleRefresh,
     ...contextData,
-    updateData,
+    updateData
   };
 
   return (

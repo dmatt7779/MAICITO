@@ -23,6 +23,11 @@ const Header = () => {
         <span className="ds-hd-icon icon-chats"></span>
         <small className="ds-hd-text">Nuevo Chatbot</small>
       </button>
+      <img
+        src="/images/brand.png"
+        alt="Ceipa-Brand"
+        className="ds-hd-img-brand"
+      />
       <button className="ds-hd-user" onClick={logOut}>
         <span className="ds-hd-out-icon icon-logout"></span>
         <small className="ds-hd-text">Salida Segura</small>

@@ -1,5 +1,5 @@
 import { DialogProps } from "../../../interfaces";
-import { INFO, URI_ROOMS } from "../../../utils/constants";
+import { GET, INFO, URI_ROOMS, WARNING } from "../../../utils/constants";
 import Statement from "../../../utils/statement";
 
 class Services {
@@ -9,12 +9,29 @@ class Services {
 
     const response = await Statement({
       uri: URI_ROOMS,
-      method: "GET",
+      method: GET,
       token: token,
       toggleLoader
     });
 
     if (response.Level !== INFO) {
+      return response;
+    }
+  };
+
+  getRoomByTitle = async ({ toggleLoader, nameTitle }: DialogProps) => {
+    const dataSession = sessionStorage.getItem("isLogged");
+    const { token } = JSON.parse(dataSession!);
+    const fullUri = `${URI_ROOMS}/?title=${nameTitle}`;
+
+    const response = await Statement({
+      uri: fullUri,
+      method: GET,
+      token: token,
+      toggleLoader
+    });
+
+    if (response.Level !== WARNING) {
       return response;
     }
   };

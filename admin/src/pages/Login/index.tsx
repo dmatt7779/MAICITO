@@ -22,6 +22,7 @@ const Login = () => {
   };
   const handleLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    visibleLoader;
 
     Services.login({
       toggleLoader: setVisibleLoader,
@@ -32,10 +33,13 @@ const Login = () => {
     });
   };
 
+  const handleRecover = async () => {
+    await Services.recover(refEmail.current, setVisibleLoader)
+  }
   return (
     <section className="lg-container">
       <img
-        src="/images/logo.jpg"
+        src="/images/logo.png"
         alt="Ceipa-Logo"
         className="lg-logo"
       />
@@ -94,7 +98,12 @@ const Login = () => {
           <span className="lg-icon icon-login"></span>
           Ingresar
         </button>
-        <label>He olvidado mi contraseña</label>
+        <a
+          className="lg-recovery"
+          onClick={handleRecover}
+        >
+          He olvidado mi contraseña
+        </a>
       </form>
       <Loader/>
       <ToastContainer />

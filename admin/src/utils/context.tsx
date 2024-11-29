@@ -6,4 +6,6 @@ export const roomsContext = createContext<DialogProps>({
   visibleLoader: false,
   toggleDialog: Function,
   toggleLoader: Function,
+  isRefresh: false,
+  toggleRefresh: Function
 });

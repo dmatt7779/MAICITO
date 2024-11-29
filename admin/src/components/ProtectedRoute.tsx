@@ -1,9 +1,14 @@
 import { Navigate } from "react-router-dom";
 import { ProtectedRoutes } from "../interfaces";
 
-const ProtectedRoute = ({ children }: ProtectedRoutes) => {
+export const ProtectedRoute = ({ children }: ProtectedRoutes) => {
   const dataSession = sessionStorage.getItem("isLogged");
   return !dataSession ? <Navigate to="/login" /> : children;
 };
 
-export default ProtectedRoute;
+export const ProtectedRecover = ({ children }: ProtectedRoutes) => {
+  const queryParams = new URLSearchParams(location.search),
+    token = queryParams.get('token');
+
+    return !token ? <Navigate to="/login" /> : children;
+};

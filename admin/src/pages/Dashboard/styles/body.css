@@ -5,5 +5,31 @@
     overflow-y: auto;
     grid-auto-flow: dense;
     grid-auto-rows: 10rem;
-    grid-template-columns: repeat(auto-fill, minmax(21.875rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+}
+
+.ds-search{
+    display: flex;
+    flex-direction: row;
+    padding: 0rem .25rem;
+    height: 2.5rem;
+}
+
+.ds-search-input{
+    flex: 1;
+    padding: .5rem 1rem;
+    letter-spacing: .09rem;
+    font-size: .9rem;
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+
+.ds-search-button{
+    padding: .5rem 1rem;
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    letter-spacing: .09rem;
+    font-size: .9rem;
+    background-color: var(--bg-moonstoneBlue);
+    color: white;
 }

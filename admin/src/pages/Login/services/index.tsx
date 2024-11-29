@@ -1,6 +1,6 @@
 import Toast from "../../../components/Toast";
 import { LoginProps } from "../../../interfaces";
-import { SUCCESS, WARNING } from "../../../utils/constants";
+import { GET, POST, SUCCESS, WARNING } from "../../../utils/constants";
 import Statement from "../../../utils/statement";
 
 class Services {
@@ -55,7 +55,7 @@ class Services {
 
     const response = await Statement({
       uri: uriPost,
-      method: "POST",
+      method: POST,
       param: formData,
       toggleLoader: toggleLoader,
     });
@@ -74,6 +74,36 @@ class Services {
       navigate("/dashboard");
     }
   };
+  recover = (email: HTMLInputElement | null, toggleLoader: Function) => {
+    const valueEmail = email?.value.trim()
+
+    if (valueEmail?.length === 0) {
+      Toast({
+        type: WARNING,
+        message: "Por favor ingresar (E-mail)",
+      });
+      email?.focus();
+      return;
+    }
+
+    this.handleRecover(valueEmail!, toggleLoader!);
+  };
+  handleRecover = async (email: string, toggleLoader: Function) => {
+    const uriPost = `recover.php?email=${email}`
+    const response = await Statement({
+      uri: uriPost,
+      method: GET,
+      toggleLoader
+    });
+
+    if (response.Level) {
+      Toast({
+        type: response.Level,
+        message: `${response.Code} - ${response.Message}`,
+      });
+      return;
+    }
+  }
 }
 
 export default new Services();

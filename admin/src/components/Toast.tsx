@@ -2,11 +2,9 @@ import { ToastOptions, toast } from 'react-toastify'
 import { ToastProps } from '../interfaces'
 import '../styles/toast.css'
 
-const Toast = ({ type, message }: ToastProps) => {
-    const level = type.toLowerCase()
-    const dynamic: keyof typeof toast = level
-
+const Toast = ({ type, message,  }: ToastProps) => {
     const props: ToastOptions = {
+        type: type,
         position: 'top-right',
         autoClose: 4000,
         className: 'toast',
@@ -18,7 +16,7 @@ const Toast = ({ type, message }: ToastProps) => {
         draggable: true
     }
 
-    if (level in toast) toast[dynamic as keyof typeof toast](message, { ...props })
+    if (type in toast) toast(message, { ...props })
 }
 
 export default Toast

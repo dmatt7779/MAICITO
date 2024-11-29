@@ -44,15 +44,24 @@ const Upload = ({
   };
 
   const deleteFiles = () => {
-    if (!filesUpdate) {
-      setFiles(files?.filter((file) => isChecked.indexOf(file.name) === -1));
-    } else {
-      setFilesUpdate(
-        filesUpdate?.filter(
-          (filesUpdate) => isChecked.indexOf(filesUpdate) === -1
-        )
-      );
-    }
+    const _files = files?.filter((file) => isChecked.indexOf(file.name) === -1);
+    const _filesUpdate = filesUpdate?.filter((filesUpdate) => isChecked.indexOf(filesUpdate) === -1)
+    
+
+    setFiles(_files);
+    setFilesUpdate(_filesUpdate);
+
+    // setFiles(files?.filter((file) => isChecked.indexOf(file.name) === -1));
+    // setFilesUpdate(filesUpdate?.filter((filesUpdate) => isChecked.indexOf(filesUpdate) === -1));
+    // if (!filesUpdate) {
+    //   setFiles(files?.filter((file) => isChecked.indexOf(file.name) === -1));
+    // } else {
+    //   setFilesUpdate(
+    //     filesUpdate?.filter(
+    //       (filesUpdate) => isChecked.indexOf(filesUpdate) === -1
+    //     )
+    //   );
+    // }
     setIsChecked([]);
   };
 

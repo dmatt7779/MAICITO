@@ -36,9 +36,6 @@
 .icon-close:before {
   content: "\e900";
 }
-.icon-untrained:before {
-  content: "\e901";
-}
 .icon-save:before {
   content: "\e902";
 }
@@ -48,14 +45,8 @@
 .icon-attach:before {
   content: "\e904";
 }
-.icon-trained:before {
-  content: "\e905";
-}
 .icon-edit:before {
   content: "\e906";
-}
-.icon-train:before {
-  content: "\e907";
 }
 .icon-logout:before {
   content: "\e908";
@@ -77,4 +68,16 @@
 }
 .icon-chat_card:before {
   content: "\e90f";
+}
+.icon-copy:before {
+  content: "\e913";
+}
+.icon-power:before {
+  content: "\e914";
+}
+.icon-active:before {
+  content: "\e905";
+}
+.icon-inactive:before {
+  content: "\e907";
 }

@@ -14,7 +14,7 @@ question_answering = QuestionAnswering()
 vector_store = VectorStore()
 question_answering = QuestionAnswering()
 vector_store = VectorStore()
-MAX_THREADS = 4  # Adjust as needed
+MAX_THREADS = 16 
 
 def process_question_worker(data: str):
     inicio = datetime.datetime.now()
@@ -40,7 +40,6 @@ def process_question_worker(data: str):
 async def ask_question(data: str = Body(...)):
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
         response = await asyncio.to_thread(process_question_worker, data)
-    # response =  process_question_worker(data) # Direct call to worker function
     if "error" in response:
         raise HTTPException(status_code=500, detail=response["error"])
     

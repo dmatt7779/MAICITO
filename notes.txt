@@ -1,0 +1,112 @@
+Python
+ssh docker@10.84.82.55
+
+- Instalar Python versionéis 3.11 o superior
+- Instalar pip como gestor de paquetes python si no viene instalado con el paquete de python
+    - sudo apt install python3-pip o sudo python3 -m ensurepip --upgrade
+- Ir a la ruta del proyecto Python actualmente:
+    - /home/docker/ubi_project/XXXX (python scripts)
+- instalar venv para manejar los ambientes virtuales para Python
+    - python3 -m venv <nombre del ambiente> ej => .venv
+- Activar el ambiente virtual
+        - source .ubivenv/bin/activate
+- Instalar los paquetes que se encuentran en requirements.txt con: 
+    - pip3 install -r requirements.txt
+- Validar que todos los paquetes están instalados con:
+    - Pip list o pip freeze
+- Iniciáticalizar uvicorn server for fastApi Python
+    - uvicorn app:app --reload
+
+
+
+FrontEnd
+- Instalar NodeJs con NPM para el manejo de paquetes de TS y poder compilar los scripts de react hecho en TS y generar la carpeta dist (build)
+    - sudo apt install nodejs npm
+- Generar la carpeta dist o build (debe estar dentro de la carpeta de admin ya que allí están los scripts de TS para el FrontEnd)
+    - Path /home/docker/ubi_project/admin
+    - npm i (para instalar las dependencias del package.json) 
+    - npm run build (generar carpeta dist)
+- Mover la carpeta dist dentro de la configuración htdocs (windows) o html de apache (Linux), además mover también las carpetas api y script
+    - /var/www/html/ubi_ceipa
+
+
+
+Apache
+- Realizar la instalación del modulo de Apache
+- Para ubi se crea un archivo de configuración de apache en la siguiente ruta:
+    - /etc/apache2/sites-available/ubi.ceipa.edu.co.conf
+ —————————————————————————————— 
+	<VirtualHost *:443>
+    ServerName ubi.ceipa.edu.co
+    ServerAlias www.ubi.ceipa.edu.co
+    ServerAdmin asistente_virtual@ceipa.edu.co
+    DocumentRoot /var/www/html/ubi_ceipa
+ 
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+ 
+    <Directory /var/www/html/ubi_ceipa>
+	# Consideren opciones más restrictivas si es posible
+        AllowOverride All
+        Require all granted
+    </Directory>
+ 
+    # Configuración SSL
+    SSLEngine on
+    #SSLCertificateFile /etc/letsencrypt/live/ejemplo.com/fullchain.pem
+    SSLCertificateFile /etc/ssl/cer_ceipa/certificate.crt
+    #SSLCertificateKeyFile /etc/letsencrypt/live/ejemplo.com/privkey.pem
+    SSLCertificateKeyFile /etc/ssl/cer_ceipa/private.key
+ 
+    <Location /macito>
+        ProxyPass http://127.0.0.1:8000/
+        ProxyPassReverse http://127.0.0.1:8000/
+        ProxyPreserveHost On
+    </Location>
+</VirtualHost>
+ —————————————————————————————— 
+<VirtualHost *:80>
+    ServerName ubi.ceipa.edu.co
+    ServerAlias www.ubi.ceipa.edu.co
+    ServerAdmin asistente_virtual@ceipa.edu.co
+    DocumentRoot /var/www/html/ubi_ceipa
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    <Directory /var/www/html/ubi>
+        AllowOverride All
+        # Consideren opciones más restrictivas si es posible
+        Require all granted  
+    </Directory>
+
+    <Location /macito>
+        ProxyPass http://127.0.0.1:8000/
+        ProxyPassReverse http://127.0.0.1:8000/
+        ProxyPreserveHost On
+    </Location>
+</VirtualHost>
+
+——————————————————————————————
+
+- Para ubi se crea una carpeta en la siguiente ruta donde se almacenan los archivos a publicar de igual forma que funciona el htdocs de xampp en windows, pero en Linux debe seguir la siguiente ruta (alli van las carpetas dist (build de frontEnd) y api (backend de microservicios php)):
+    - /var/www/html/ubi_ceipa
+- Ejecutar el comando para habilitar el modulo de ProxyPass y ProxyPassReverse ya que tiene configurado el archivo de virtualhost las directivas para hacer eso del mismo.
+    - sudo a2enmod proxy
+- Habilitar el archivo de configuración del sitio web ubi.ceipa.edu.co.conf en Apache. En esencia, le dice a Apache que incluya la configuración de ese archivo al iniciar o recargar el servidor.
+    - sudo a2ensite ubi.ceipa.edu.co.conf
+- Habilitar el modulo de headers y rewrite de apache, debido al .htaccess de php en api/
+    - sudo a2enmod rewrite
+    - sudo a2enmod headers
+- Recargar Apache para que los cambios surtan efecto, usándosela el siguiente comando:
+    - systemctl reload apache2 o sudo systemctl restart apache2
+
+
+ChromaDB
+- Instalar Docker
+- Descargar la imagen de chromadb usándosela:
+    - docker pull chromadb/chroma
+- Crear el contenedor con la imagen de chromaDB:
+    - docker run -p 8002:8000 --name chroma chromadb/chroma
+
+

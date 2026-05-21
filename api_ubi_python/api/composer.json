@@ -1,0 +1,16 @@
+{
+    "name": "developer/ceipa",
+    "description": "Software para crear salas de chatbot.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Developer\\Ceipa\\": "src/"
+        }
+    },
+    "authors": [{
+        "name": "Robinson Gomez"
+    }],
+    "require": {
+        "firebase/php-jwt": "^6.10"
+    }
+}

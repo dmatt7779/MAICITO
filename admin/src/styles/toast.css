@@ -1,0 +1,8 @@
+.toast {
+  margin-bottom: 0 !important;
+}
+
+.toast-body {
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
+}

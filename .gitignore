@@ -1,0 +1,63 @@
+# ==========================================
+# Gitignore para Proyecto UBI (Python & Apache/React)
+# ==========================================
+
+# --- 1. Archivos de Caché de Python (Backend) ---
+# Evita subir las carpetas __pycache__ que vimos en tu estructura de carpetas
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- 2. Entornos Virtuales (Aislamiento de Dependencias) ---
+# Ignora el entorno virtual local para que no subas gigabytes de librerías de OpenAI/LangChain
+.ubivenv/
+.venv/
+venv/
+env/
+ENV/
+
+# --- 3. Logs y Archivos de Ejecución en Segundo Plano ---
+# Vital para no trackear el log infinito de nohup que tienes en la raíz
+nohup.out
+*.log
+
+# --- 4. Variables de Entorno y Credenciales (SEGURIDAD CRÍTICA) ---
+# Nunca subas tus llaves de OpenAI o credenciales de Apache a GitHub
+.env
+*.env
+.openai_api_key
+certs/
+*.pem
+*.key
+*.crt
+
+# --- 5. Frontend / Admin (Vite / React / Node) ---
+# Si manejas el código fuente de la app web en el mismo repo
+node_modules/
+/admin/node_modules/
+/admin/dist/
+/admin/build/
+.eslintcache
+npm-debug.log*
+
+# --- 6. Base de Datos / Almacenamiento Local ---
+# Evita subir archivos locales de persistencia o almacenamiento temporal de ChromaDB
+*.db
+*.sqlite3
+.chroma/
+/instance/
+
+# --- 7. Archivos del Sistema Operativo y Editores ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp

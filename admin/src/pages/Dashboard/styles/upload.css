@@ -1,0 +1,89 @@
+.ds-upload{
+    gap: .5rem;
+    display: grid;
+    padding: .5rem;
+    place-content: center;
+    justify-content: stretch;
+}
+
+.ds-u-attach{
+    gap: .25rem;
+    display: grid;
+    min-height: 16rem;
+    position: relative;
+    font-size: .688rem;
+    text-align: center;
+    place-content: center;
+    letter-spacing: .07rem;
+    border-radius: .625rem;    
+    background: var(--bg-Cultured);
+    border: .125rem dashed var(--bg-Manatee);
+}
+
+.ds-u-attach:hover{
+    background: var(--bg-AzureishWhite\50);
+}
+
+.ds-u-at-icon{
+    font-size: 3rem;
+    color: var(--bg-MaastrichtBlue);
+}
+
+.ds-u-at-label{
+    font-weight: 600;
+    padding: 0 .25rem;
+    font-size: .75rem;
+    border-radius: .25rem;
+    transition: all .4s ease-in-out;
+}
+
+.ds-u-at-label:hover{
+    color: var(--bg-white);
+    background: var(--bg-MaastrichtBlue);
+}
+
+.ds-u-at-label-small{
+    font-size: .688rem;
+}
+
+.ds-u-l{
+    display: flex;
+    align-items: center;
+    padding-right: .25rem;
+    justify-content: space-between;
+}
+
+.ds-u-l-button{
+    background: transparent;
+    opacity: .7;
+    transition: opacity .2s ease-in-out;
+}
+
+.ds-u-l-b-icon{
+    font-size: 1.3rem;
+    color: var(--bg-red);
+}
+
+.ds-u-l-button:hover{
+    opacity: 1;
+    text-shadow: 1px 1px 2px var(--bg-red);
+}
+
+.ds-u-l-title{
+    font-weight: 500;
+    font-size: .875rem;
+    color: var(--bg-red);
+    letter-spacing: .07rem;
+}
+
+.ds-u-l-title-divide{
+    height: .063rem;
+    margin: .25rem 0;
+    background: linear-gradient(to right, var(--bg-red) 0%, transparent 80%);
+}
+
+.ds-u-l-list{
+    list-style: none;
+    display: grid;
+    gap: .15rem;
+}

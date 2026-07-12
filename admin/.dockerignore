@@ -1,0 +1,28 @@
+# =============================================
+# UBI Frontend Admin - Docker build context excludes
+# Las dependencias se instalan en la imagen con `npm ci`; el build no debe
+# arrastrar node_modules/dist del host (evita conflictos de plataforma).
+# =============================================
+
+# ── Dependencias y artefactos de build ──
+node_modules/
+dist/
+build/
+.eslintcache
+
+# ── VCS / metadata local ──
+.git/
+.gitignore
+.dockerignore
+
+# ── Logs / OS / editor ──
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ── Variables de entorno locales (por si acaso) ──
+.env
+.env.*

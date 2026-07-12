@@ -1,6 +1,6 @@
 import os
+import requests
 from dotenv import load_dotenv
-import subprocess
 import chromadb
 
 load_dotenv()
@@ -8,22 +8,25 @@ load_dotenv()
 class ChromaDBManager:
 
   def __init__(self):
-    self.chroma_host = os.environ.get("CHROMA_HOST")
-    self.chroma_port = int(os.environ.get("CHROMA_PORT"))
+    self.chroma_host = os.environ.get("CHROMA_HOST", "localhost")
+    self.chroma_port = int(os.environ.get("CHROMA_PORT", "8000"))
 
   def is_chromadb_running(self):
-    command = ["docker", "ps", "-f", "ancestor=chromadb/chroma", "--format", "{{.Status}}"]
+    """Verifica si ChromaDB está accesible via HTTP health check."""
     try:
-      result = subprocess.run(command, check=True, capture_output=True, text=True)
-      status = result.stdout.strip()
-      if "Up" in status:
-        print("Contenedor ChromaDB está en ejecución.")
+      url = f"http://{self.chroma_host}:{self.chroma_port}/api/v1/heartbeat"
+      response = requests.get(url, timeout=5)
+      if response.status_code == 200:
+        print("ChromaDB está en ejecución (heartbeat OK).")
         return True
       else:
-        print("Contenedor ChromaDB no está en ejecución.")
+        print(f"ChromaDB respondió con status: {response.status_code}")
         return False
-    except subprocess.CalledProcessError as e:
-      print(f"Error al verificar el estado del contenedor ChromaDB: {e}")
+    except requests.exceptions.ConnectionError:
+      print("ChromaDB no está accesible (connection refused).")
+      return False
+    except Exception as e:
+      print(f"Error al verificar el estado de ChromaDB: {e}")
       return False
 
   def get_client(self):
@@ -34,4 +37,4 @@ class ChromaDBManager:
         except Exception as e:
             raise Exception(f"Error al conectar a ChromaDB: {e}, host: {self.chroma_host}, port: {self.chroma_port}")
     else:
-        raise Exception("El contenedor ChromaDB no está en ejecución.")
+        raise Exception("ChromaDB no está en ejecución o no es accesible.")

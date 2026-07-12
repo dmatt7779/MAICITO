@@ -12,9 +12,19 @@ use InvalidArgumentException;
 
 class Request extends Statement
 {
-    private $folderMain = '../public/';
-    private $folderFiles = 'files/';
-    private $folderImages = 'images/';
+    private string $folderFiles;
+    private string $folderImages;
+
+    public function __construct()
+    {
+        // El contenido subido de las salas vive en el volumen Docker compartido
+        // (ubi-uploads), montado en /var/www/shared tanto en el contenedor PHP
+        // como en el de Python. Las rutas se leen de env (UPLOAD_PATH / IMAGE_PATH)
+        // con fallback seguro: PHP escribe, Apache sirve y Python lee en la misma
+        // ubicación.
+        $this->folderFiles = rtrim(getenv('UPLOAD_PATH') ?: '/var/www/shared/files', '/') . '/';
+        $this->folderImages = rtrim(getenv('IMAGE_PATH') ?: '/var/www/shared/images', '/') . '/';
+    }
 
     protected function searchRooms()
     {
@@ -32,7 +42,7 @@ class Request extends Statement
             ];
         } else {
             foreach ($response as $data) {
-                $pathFiles = $this->folderMain . $this->folderFiles . $data[3] . '/*';
+                $pathFiles = $this->folderFiles . $data[3] . '/*';
                 $dateCreated = new DateTime($data[4]);
                 $formatter = new IntlDateFormatter('es_CO', IntlDateFormatter::LONG, IntlDateFormatter::NONE, null, null, 'dd \'de\' MMMM \'del\' yyyy');
 
@@ -116,7 +126,7 @@ class Request extends Statement
                     'words' => $data[3],
                     'path' => $data[4],
                     'files' => explode(',', $data[5]),
-                    'image' => 'http://ubi.ceipa.edu.co/api/public/' . $this->folderImages . $data[4] . '/' . $data[6]
+                    'image' => '/api/public/images/' . $data[4] . '/' . $data[6]
                 ];
             }
         }
@@ -188,7 +198,7 @@ class Request extends Statement
 
     private function createdFolderFiles(string $uuid, array $files): void
     {
-        $folderFiles =  $this->folderMain . $this->folderFiles . $uuid;
+        $folderFiles =  $this->folderFiles . $uuid;
 
         if (!is_dir($folderFiles) && mkdir($folderFiles, recursive: true)) {
             foreach ($files['tmp_name'] as $key => $file) {
@@ -207,7 +217,7 @@ class Request extends Statement
 
     private function createdFolderImages(string $uuid, array $image): void
     {
-        $folderImages = $this->folderMain . $this->folderImages . $uuid;
+        $folderImages = $this->folderImages . $uuid;
 
         if (!is_dir($folderImages) && mkdir($folderImages, recursive: true)) {
             $tmpName = $image['tmp_name'];
@@ -224,7 +234,7 @@ class Request extends Statement
 
     private function deleteFiles(string $uuid, string $files): void
     {
-        $directory = $this->folderMain . $this->folderFiles . $uuid;
+        $directory = $this->folderFiles . $uuid;
         $allFiles = array_diff(scandir($directory, 1), array('..', '.'));
         $savedFiles = json_decode($files);
 
@@ -237,7 +247,7 @@ class Request extends Statement
 
     private function deleteImages(string $uuid): void
     {
-        $directory = $this->folderMain . $this->folderImages . $uuid;
+        $directory = $this->folderImages . $uuid;
         $allFiles = array_diff(scandir($directory, 1), array('..', '.'));
 
         foreach ($allFiles as $file) {
@@ -257,8 +267,8 @@ class Request extends Statement
         $_path=$dataRoom[0][4];
 
         $response = $this->SendRequest('CALL deleteRoom(?)', 's', [$_id]);
-        $this->deleteDirectory($this->folderMain.$this->folderImages.$_path);
-        $this->deleteDirectory($this->folderMain.$this->folderFiles.$_path);
+        $this->deleteDirectory($this->folderImages.$_path);
+        $this->deleteDirectory($this->folderFiles.$_path);
 
         $this->buildResultDeleteRoom($response);
     }

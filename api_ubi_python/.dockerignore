@@ -1,0 +1,35 @@
+# =============================================
+# UBI Python Backend - Docker build context excludes
+# Keeps the image small and reproducible.
+# =============================================
+
+# ── Python caches / build artifacts ──
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# ── Virtual environments (deps are installed in the image) ──
+.venv/
+venv/
+env/
+ENV/
+.ubivenv/
+
+# ── VCS / local metadata ──
+.git/
+.gitignore
+.dockerignore
+
+# ── Logs / OS / editor junk ──
+nohup.out
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

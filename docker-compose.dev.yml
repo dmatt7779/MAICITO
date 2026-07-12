@@ -1,0 +1,100 @@
+services:
+  # ── ChromaDB Vector Store ──
+  ubi-chromadb:
+    image: chromadb/chroma:0.5.0
+    container_name: ubi-chromadb-dev
+    restart: always
+    ports:
+      - "3008:8000"
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    volumes:
+      - ubi-chroma-data:/chroma/chroma/
+    networks:
+      - ubi-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── PHP Backend (Microservices) ──
+  ubi-php:
+    build:
+      context: ./api_php
+    container_name: ubi-php-dev
+    restart: always
+    ports:
+      - "3009:80"
+    env_file:
+      - .env.dev
+    volumes:
+      - ./api_php:/var/www/html/api
+      - ubi-uploads:/var/www/shared
+      # Llaves JWT montadas fuera del document root (solo lectura)
+      - ./api_php/keys:/var/www/keys:ro
+    networks:
+      - ubi-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD-SHELL", "php -r 'exit(@file_get_contents(\"http://localhost/health.php\") !== false ? 0 : 1);'"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ── Python Backend (AI / FastAPI) ──
+  ubi-python:
+    build:
+      context: ./api_ubi_python
+      target: dev
+    container_name: ubi-python-dev
+    restart: always
+    ports:
+      - "3010:8000"
+    env_file:
+      - .env.dev
+    volumes:
+      - ./api_ubi_python:/app
+      - ubi-uploads:/var/www/shared
+    networks:
+      - ubi-network
+    depends_on:
+      ubi-chromadb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  # ── Frontend Admin (Vite Dev Server) ──
+  ubi-frontend:
+    build:
+      context: ./admin
+      target: dev
+    container_name: ubi-frontend-dev
+    restart: always
+    ports:
+      - "3011:5173"
+    volumes:
+      - ./admin:/app
+      - /app/node_modules # Anonymous volume to prevent host node_modules conflict
+    networks:
+      - ubi-network
+    depends_on:
+      ubi-php:
+        condition: service_healthy
+      ubi-python:
+        condition: service_healthy
+
+networks:
+  ubi-network:
+    driver: bridge
+
+volumes:
+  ubi-chroma-data:
+  ubi-uploads:

@@ -18,11 +18,11 @@ class Connection
 
         if (!mysqli_real_connect(
             $this->connection,
-            Conn::HOST->value,
-            Conn::USER->value,
-            Conn::PASSWORD->value,
-            Conn::DATABASE->value,
-            Conn::PORT->value
+            Conn::HOST->resolve(),
+            Conn::USER->resolve(),
+            Conn::PASSWORD->resolve(),
+            Conn::DATABASE->resolve(),
+            Conn::PORT->resolve()
         )) throw new Exception(
             str_replace(
                 array('__', '--'),

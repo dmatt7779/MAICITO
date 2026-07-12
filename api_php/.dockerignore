@@ -1,0 +1,31 @@
+# =============================================
+# UBI PHP Backend - Docker build context excludes
+# Keeps the image small: uploaded content lives in the
+# ubi-uploads volume, and dependencies are installed by
+# Composer inside the image (not copied from the host).
+# =============================================
+
+# ── Uploaded room content (served from the ubi-uploads volume at runtime) ──
+public/files/
+public/images/
+
+# ── Composer dependencies (reinstalled in the image) ──
+vendor/
+
+# ── Secretos: llaves JWT (se montan en runtime, NUNCA en la imagen) ──
+keys/
+*.pem
+*.key
+*.crt
+
+# ── VCS / local metadata ──
+.git/
+.gitignore
+.dockerignore
+
+# ── Logs / OS / editor junk ──
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

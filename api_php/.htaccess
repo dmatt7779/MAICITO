@@ -1,11 +1,15 @@
 Options +FollowSymLinks
 RewriteEngine On
 
-#Set Headers.
-Header always set Access-Control-Allow-Origin "*"
-Header always set Access-Control-Allow-Methods "GET, POST"
-Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
-Header always set Access-Control-Allow-Credentials "true"
+#CORS: reflejar el Origin SOLO si pertenece a ceipa.edu.co (misma política que el
+#backend Python). En el stack Docker el admin es same-origin (via proxy Nginx/Vite),
+#así que normalmente no se emiten estas cabeceras; se quita el "*" (inseguro y
+#además inválido junto con Allow-Credentials).
+SetEnvIf Origin "^https?://([a-z0-9.-]+\.)?ceipa\.edu\.co$" UBI_CORS=$0
+Header always set Access-Control-Allow-Origin "%{UBI_CORS}e" env=UBI_CORS
+Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS" env=UBI_CORS
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization" env=UBI_CORS
+Header always set Vary "Origin"
 
 #Verify That The Authorization Header Is Enabled And Is Not Empty.
 RewriteCond %{HTTP:Authorization} .+

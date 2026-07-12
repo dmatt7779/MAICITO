@@ -1,13 +1,15 @@
 // Este archivo se dedicará exclusivamente a las operaciones relacionadas con el PDF.
 
+import { URL_CHROMA } from "../../../utils/constants";
+
 class PdfService {
   downloadHistory = async (chatbotId: string) => {
     // Muestra un loader si tienes uno global disponible
     // toggleLoader(true); 
 
     try {
-      // 1. Construye la URL del endpoint de FastAPI
-      const apiUrl = `https://ubi.ceipa.edu.co/macito/download_pdf/${chatbotId}`;
+      // 1. Endpoint de FastAPI vía proxy relativo (dev: Vite, prod: Nginx)
+      const apiUrl = `${URL_CHROMA}download_pdf/${chatbotId}`;
       
       const response = await fetch(apiUrl);
 

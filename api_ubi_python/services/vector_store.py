@@ -10,7 +10,7 @@ class VectorStore:
         self.api_key = os.getenv("OPENAI_API_KEY")
         self.openai_ef = embedding_functions.OpenAIEmbeddingFunction(
             api_key=self.api_key,
-            model_name="text-embedding-3-small"
+            model_name=os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
         )
 
     def add_documents(self, text_chunks_with_metadata: List[Dict], collection_name: str):

@@ -1,0 +1,110 @@
+services:
+  # ── MySQL Database ──
+  ubi-mysql:
+    build:
+      context: ./db
+    container_name: ubi-mysql-prod
+    restart: always
+    env_file:
+      - .env.prod
+    volumes:
+      - ubi-mysql-data:/var/lib/mysql
+    networks:
+      - ubi-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── ChromaDB Vector Store ──
+  ubi-chromadb:
+    image: chromadb/chroma:0.5.0
+    container_name: ubi-chromadb-prod
+    restart: always
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    volumes:
+      - ubi-chroma-data:/chroma/chroma/
+    networks:
+      - ubi-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── PHP Backend (Microservices) ──
+  ubi-php:
+    build:
+      context: ./api_php
+    container_name: ubi-php-prod
+    restart: always
+    env_file:
+      - .env.prod
+    volumes:
+      - ubi-uploads:/var/www/shared
+      # Llaves JWT montadas fuera del document root (solo lectura)
+      - ./api_php/keys:/var/www/keys:ro
+    networks:
+      - ubi-network
+    depends_on:
+      ubi-mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "php -r 'exit(@file_get_contents(\"http://localhost/health.php\") !== false ? 0 : 1);'"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ── Python Backend (AI / FastAPI) ──
+  ubi-python:
+    build:
+      context: ./api_ubi_python
+      target: prod
+    container_name: ubi-python-prod
+    restart: always
+    env_file:
+      - .env.prod
+    volumes:
+      - ubi-uploads:/var/www/shared
+    networks:
+      - ubi-network
+    depends_on:
+      ubi-chromadb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  # ── Frontend Admin (Nginx Production Build) ──
+  ubi-frontend:
+    build:
+      context: ./admin
+      target: prod
+    container_name: ubi-frontend-prod
+    restart: always
+    ports:
+      # Host 80 -> contenedor 8080 (nginx-unprivileged, no-root)
+      - "80:8080"
+    networks:
+      - ubi-network
+    depends_on:
+      ubi-php:
+        condition: service_healthy
+      ubi-python:
+        condition: service_healthy
+
+networks:
+  ubi-network:
+    driver: bridge
+
+volumes:
+  ubi-mysql-data:
+  ubi-chroma-data:
+  ubi-uploads:

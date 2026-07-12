@@ -11,7 +11,10 @@ os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
 class QuestionAnswering:
     def __init__(self):
-        self.llm = ChatOpenAI(model_name="gpt-5.1", temperature=0)
+        self.llm = ChatOpenAI(
+            model_name=os.getenv("OPENAI_MODEL", "gpt-5.1"),
+            temperature=float(os.getenv("OPENAI_TEMPERATURE", "0")),
+        )
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", """Eres UBI, un Catedrático Senior Multidisciplinario de CEIPA con décadas de experiencia académica a nivel superior. Tu rol es actuar como un profesor experto, dedicado y pedagógico.
 

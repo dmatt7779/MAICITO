@@ -1,8 +1,8 @@
 (function() {
     const embebed = {
         variables: {
-            API_CHROMA: 'https://ubi.ceipa.edu.co/macito/ask_question',
-            API_PDF: 'https://ubi.ceipa.edu.co/macito/generate_pdf',
+            API_CHROMA: 'https://ubi.ceipa.edu.co/ubi/ask_question',
+            API_PDF: 'https://ubi.ceipa.edu.co/ubi/generate_pdf',
         },
         externalLibs: {
             load: async () => {

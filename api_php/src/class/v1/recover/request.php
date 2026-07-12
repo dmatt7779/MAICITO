@@ -37,6 +37,9 @@ use PHPMailer\PHPMailer\OAuth;
         }
 
         private function createdMail(string $token){
+            // URL pública del sitio (para el enlace del email). Sale de env con
+            // fallback al dominio de producción. Los emails requieren URL absoluta.
+            $appUrl = rtrim(getenv('APP_PUBLIC_URL') ?: 'https://ubi.ceipa.edu.co', '/');
             $body = "<!DOCTYPE html>";
             $body .= "<html lang='en'>";
             $body .= "<head>";
@@ -46,7 +49,7 @@ use PHPMailer\PHPMailer\OAuth;
             $body .= "</head>";
             $body .= "<body>";
             $body .= "    <center>";
-            $body .= "        <a href='https://ubi.ceipa.edu.co/recover?token=$token' target=_new> <img src='https://ubi.ceipa.edu.co/images/pwd_recover.png' alt='imagen de recuperacion contrasena email'/></a>";
+            $body .= "        <a href='$appUrl/recover?token=$token' target=_new> <img src='$appUrl/images/pwd_recover.png' alt='imagen de recuperacion contrasena email'/></a>";
             $body .= "    </center>";
             $body .= "</body>";
             $body .= "</html>";
@@ -68,17 +71,17 @@ use PHPMailer\PHPMailer\OAuth;
 
             try {
                 $mail->isSMTP();
-                $mail->Host       = Mail::HOST->value;
+                $mail->Host       = Mail::HOST->resolve();
                 $mail->Port       = 587; 
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->SMTPAuth   = true; 
 
-                $mail->Username   = Mail::USER->value;
-                $mail->Password   = Mail::PASSWORD->value;
+                $mail->Username   = Mail::USER->resolve();
+                $mail->Password   = Mail::PASSWORD->resolve();
                 
                 $mail->CharSet = 'UTF-8';
                 $mail->setLanguage('es');
-                $mail->setFrom(Mail::USER->value, 'Ceipa');
+                $mail->setFrom(Mail::USER->resolve(), 'Ceipa');
                 $mail->addAddress($email, 'Prueba'); 
 
                 $mail->isHTML(true);

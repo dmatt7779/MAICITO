@@ -29,6 +29,8 @@ nohup.out
 # Nunca subas tus llaves de OpenAI o credenciales de Apache a GitHub
 .env
 *.env
+.env.*
+!.env.example
 .openai_api_key
 certs/
 *.pem
@@ -50,6 +52,14 @@ npm-debug.log*
 *.sqlite3
 .chroma/
 /instance/
+
+# --- 6b. Contenido subido por usuarios (Salas PHP) ---
+# Los PDFs/imagenes de las salas NO se versionan: en runtime viven en el
+# volumen Docker ubi-uploads. Se conserva la estructura de carpetas con .gitkeep.
+/api_php/public/files/*
+/api_php/public/images/*
+!/api_php/public/files/.gitkeep
+!/api_php/public/images/.gitkeep
 
 # --- 7. Archivos del Sistema Operativo y Editores ---
 .DS_Store

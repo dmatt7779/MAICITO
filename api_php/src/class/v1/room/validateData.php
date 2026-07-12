@@ -14,6 +14,7 @@ class ValidateData extends Request
     public function __construct(
         protected $validate = new Validate()
     ) {
+        parent::__construct();
     }
 
     protected function handleSearchRooms()

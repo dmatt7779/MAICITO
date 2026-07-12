@@ -11,13 +11,13 @@ final class JwToken
 {
     public static function jwtEncode(array $payload)
     {
-        return JWT::encode($payload, jwtToken::PRIVATE->value, jwtToken::TYPE->value);
+        return JWT::encode($payload, jwtToken::PRIVATE->resolve(), jwtToken::TYPE->resolve());
     }
 
     public static function jwtDecode(string $jwtEncode)
     {
         try{
-            return JWT::decode($jwtEncode, new Key(jwtToken::PUBLIC->value, jwtToken::TYPE->value));
+            return JWT::decode($jwtEncode, new Key(jwtToken::PUBLIC->resolve(), jwtToken::TYPE->resolve()));
         } catch(\Exception $ex){
             echo json_encode([
                 'Level' => TypeMessage::ERROR->value,

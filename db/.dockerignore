@@ -1,0 +1,10 @@
+# =============================================
+# UBI MySQL - Docker build context excludes
+# Solo se necesita el Dockerfile y el dump SQL de inicialización.
+# =============================================
+.git/
+.gitignore
+.dockerignore
+*.log
+.DS_Store
+Thumbs.db

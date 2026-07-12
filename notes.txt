@@ -58,9 +58,9 @@ Apache
     #SSLCertificateKeyFile /etc/letsencrypt/live/ejemplo.com/privkey.pem
     SSLCertificateKeyFile /etc/ssl/cer_ceipa/private.key
  
-    <Location /macito>
-        ProxyPass http://127.0.0.1:8000/
-        ProxyPassReverse http://127.0.0.1:8000/
+    <Location /ubi>
+        ProxyPass http://127.0.0.1:8000/ubi/
+        ProxyPassReverse http://127.0.0.1:8000/ubi/
         ProxyPreserveHost On
     </Location>
 </VirtualHost>
@@ -80,9 +80,9 @@ Apache
         Require all granted  
     </Directory>
 
-    <Location /macito>
-        ProxyPass http://127.0.0.1:8000/
-        ProxyPassReverse http://127.0.0.1:8000/
+    <Location /ubi>
+        ProxyPass http://127.0.0.1:8000/ubi/
+        ProxyPassReverse http://127.0.0.1:8000/ubi/
         ProxyPreserveHost On
     </Location>
 </VirtualHost>

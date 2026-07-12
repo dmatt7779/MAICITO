@@ -1,10 +1,25 @@
-import { ToastOptions, toast } from 'react-toastify'
+import { ToastOptions, TypeOptions, toast } from 'react-toastify'
 import { ToastProps } from '../interfaces'
 import '../styles/toast.css'
 
-const Toast = ({ type, message,  }: ToastProps) => {
+// Mapea el "Level" del backend (success/warning/error/information) al tipo de
+// react-toastify, que es quien define el COLOR del toast (theme "colored").
+// Ojo: el backend usa "information" pero react-toastify espera "info".
+const LEVEL_TO_TYPE: Record<string, TypeOptions> = {
+    success: 'success',
+    warning: 'warning',
+    error: 'error',
+    information: 'info',
+    info: 'info',
+}
+
+const Toast = ({ type, message }: ToastProps) => {
+    if (!message) return
+
+    const toastType: TypeOptions = LEVEL_TO_TYPE[type as string] ?? 'default'
+
     const props: ToastOptions = {
-        type: type,
+        type: toastType,
         position: 'top-right',
         autoClose: 4000,
         className: 'toast',
@@ -16,7 +31,7 @@ const Toast = ({ type, message,  }: ToastProps) => {
         draggable: true
     }
 
-    if (type in toast) toast(message, { ...props })
+    toast(message, { ...props })
 }
 
 export default Toast

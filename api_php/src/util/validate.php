@@ -31,7 +31,11 @@ final class Validate
 
     public static function nameFiles(string $data): bool
     {
-        return preg_match('/^[0-9a-zA-Z-\_.)(]+$/i', $data);
+        // Permite letras (con acentos precompuestos y combinados \p{M}, típico de
+        // archivos de macOS/NFD), números, espacios y . _ ( ) -.
+        // Sigue bloqueando / \ , y demás para no romper rutas ni la lista de rutas
+        // separada por comas que se envía al servicio Python.
+        return preg_match('/^[ \p{L}\p{N}\p{M}._()\-]+$/u', $data);
     }
 
     public static function isEmail(string $data): bool

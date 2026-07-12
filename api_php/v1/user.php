@@ -1,6 +1,7 @@
 <?php
     require_once('../vendor/autoload.php');
-    
+    require_once('../src/util/response.php');
+
     $validate = new \Developer\Ceipa\class\v1\user\ValidateMethod;
 
     $method = $_SERVER['REQUEST_METHOD'];

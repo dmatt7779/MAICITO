@@ -42,7 +42,7 @@ class ValidateData extends Request
             str_replace('__', Constants::PARAM->value, Message::NOT_EMPTY_PARAMETER->value),
             intval(TypeMessage::CODE_WARNING->value)
         );
-        if (!$this->validate::isOnlyText($name)) throw new InvalidArgumentException(
+        if (!$this->validate::isText($name)) throw new InvalidArgumentException(
             str_replace('__', Constants::PARAM->value, Message::INCORRECT_PARAMETER->value),
             intval(TypeMessage::CODE_WARNING->value)
         );
@@ -56,7 +56,7 @@ class ValidateData extends Request
             str_replace('__', Constants::PARAM->value, Message::NOT_EMPTY_PARAMETER->value),
             intval(TypeMessage::CODE_WARNING->value)
         );
-        if (!$this->validate::isOnlyText($name)) throw new InvalidArgumentException(
+        if (!$this->validate::isText($name)) throw new InvalidArgumentException(
             str_replace('__', Constants::PARAM->value, Message::INCORRECT_PARAMETER->value),
             intval(TypeMessage::CODE_WARNING->value)
         );
@@ -87,7 +87,7 @@ class ValidateData extends Request
             str_replace('__', Constants::TITLE->value, Message::NOT_EMPTY_PARAMETER->value),
             intval(TypeMessage::CODE_WARNING->value)
         );
-        if (!$this->validate::isOnlyText($title)) throw new InvalidArgumentException(
+        if (!$this->validate::isText($title)) throw new InvalidArgumentException(
             str_replace('__', Constants::TITLE->value, Message::INCORRECT_PARAMETER->value),
             intval(TypeMessage::CODE_WARNING->value)
         );
@@ -157,7 +157,7 @@ class ValidateData extends Request
             str_replace('__', Constants::TITLE->value, Message::NOT_EMPTY_PARAMETER->value),
             intval(TypeMessage::CODE_WARNING->value)
         );
-        if (!$this->validate::isOnlyText($title)) throw new InvalidArgumentException(
+        if (!$this->validate::isText($title)) throw new InvalidArgumentException(
             str_replace('__', Constants::TITLE->value, Message::INCORRECT_PARAMETER->value),
             intval(TypeMessage::CODE_WARNING->value)
         );

@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     unzip \
     libzip-dev \
-    && docker-php-ext-install mysqli zip \
+    libicu-dev \
+    && docker-php-ext-install mysqli zip intl \
     && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache modules required by .htaccess

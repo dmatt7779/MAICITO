@@ -27,7 +27,7 @@ const Body = () => {
   },[isRefresh]);
 
   return (
-    <div>
+    <div className="ds-content">
       <div className="ds-search">
         <input 
           className="ds-search-input"
@@ -41,7 +41,7 @@ const Body = () => {
           onClick={() => toggleRefresh!()}>Buscar</button>
       </div>
       <div className="ds-body">
-        {rooms &&
+        {Array.isArray(rooms) &&
           rooms.map((item) => (
             <Card
               key={item.id}

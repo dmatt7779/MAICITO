@@ -6,11 +6,11 @@
      * Reads from environment variables (Docker) with fallback to defaults (legacy).
      */
     enum Connection:string{
-        case HOST = '';
-        case USER = '';
-        case PASSWORD = '';
-        case DATABASE = '';
-        case PORT = '';
+        case HOST = 'host';
+        case USER = 'user';
+        case PASSWORD = 'password';
+        case DATABASE = 'database';
+        case PORT = 'port';
 
         public function resolve(): string {
             return match($this) {

@@ -6,9 +6,9 @@
      * Reads from environment variables (Docker) with fallback to defaults (legacy).
      */
     enum Mail:string{
-        case HOST = '';
-        case USER = '';
-        case PASSWORD = '';
+        case HOST = 'host';
+        case USER = 'user';
+        case PASSWORD = 'password';
 
         public function resolve(): string {
             return match($this) {

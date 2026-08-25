@@ -151,6 +151,7 @@ docker compose -f docker-compose.prod.yml up --build -d
   - El frontend estático se sirve desde la raíz `/`.
   - Las peticiones hacia `/api/*` son redirigidas internamente por Nginx hacia `ubi-php:80`.
   - Las peticiones hacia `/ubi/*` son redirigidas internamente hacia `ubi-python:8000`.
+  - El **widget de chat embebible** se sirve como archivo estático en `/script/index.js` (proviene de `admin/public/script/index.js`), para incrustar el chat en sitios externos con el snippet que genera el botón "Copiar Script" del panel.
 
 ---
 

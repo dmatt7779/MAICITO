@@ -157,6 +157,36 @@ En el **primer arranque**, `ubi-mysql` ejecuta automáticamente el dump
 
 ---
 
+## 💬 Widget de chat embebible
+
+Además del panel admin, UBI incluye un **widget** que se puede incrustar en cualquier
+página externa (el portal público de CEIPA, la página de un curso, etc.) para mostrar
+una burbuja de chat flotante.
+
+El widget se sirve **desde el propio contenedor** en `/script/index.js` (el archivo vive
+en `admin/public/script/index.js` y entra en el build automáticamente). No hay que copiar
+nada a mano en el servidor ni usar un hosting aparte.
+
+Para incrustarlo, en el panel admin cada sala tiene el botón **"Copiar Script"**, que
+genera un snippet como este para pegar en la página destino:
+
+```html
+<script>
+  window.Ceipa = {
+    chatbotId: "cafe_ia_00",
+    imageRoom: "https://ubi.ceipa.edu.co/api/public/images/<uuid>/imagen.png"
+  };
+</script>
+<script src="https://ubi.ceipa.edu.co/script/index.js"></script>
+```
+
+> Como el widget corre en páginas ajenas, el snippet usa la **URL absoluta** del dominio.
+> Requisito de infraestructura: que `ubi.ceipa.edu.co` apunte al servidor (DNS) y tenga
+> HTTPS. Si actualizas el widget, reemplaza `admin/public/script/index.js` y reconstruye
+> el frontend.
+
+---
+
 ## 🧪 Verificación (smoke test)
 
 ```bash

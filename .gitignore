@@ -71,3 +71,10 @@ Thumbs.db
 *.njsproj
 *.sln
 *.swp
+
+# --- 8. Archivos de Copia de Seguridad ---
+*.zip*
+*.pdf*
+*.docx*
+*.txt*
+*.sql*
